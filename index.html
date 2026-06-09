@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sajid Amin — PHP & Full-Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --ink:        #0C0C0F;
+    --ink-soft:   #3A3A48;
+    --ink-muted:  #7A7A8C;
+    --surface:    #F7F6F3;
+    --white:      #FFFFFF;
+    --accent:     #5B4AF5;
+    --accent-2:   #00C9A7;
+    --accent-light: rgba(91,74,245,0.08);
+    --border:     rgba(12,12,15,0.10);
+
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 68px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: #fff !important;
+    padding: .45rem 1.1rem;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    transition: opacity .2s !important;
+  }
+  .nav-cta:hover { opacity: .85; color: #fff !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 5vw 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(91,74,245,0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,201,167,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 80% 50%, black 0%, transparent 65%);
+  }
+  .hero-inner {
+    position: relative; z-index: 1;
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: center;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: .35rem .9rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); display: inline-block; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 5.5vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 .name-accent { color: var(--accent); }
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: .85rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(91,74,245,.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(91,74,245,.4); }
+  .btn-outline {
+    border: 1.5px solid var(--border);
+    color: var(--ink);
+    padding: .85rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-val {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .stat-val span { color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--ink-muted); margin-top: .3rem; }
+
+  /* Hero image card */
+  .hero-card {
+    position: relative;
+  }
+  .hero-card-inner {
+    background: var(--surface);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .hero-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, #e0ddf8 0%, #c9f0e9 100%);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding: 2rem;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .hero-badge {
+    position: absolute; bottom: -1rem; left: -1rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: .85rem 1.2rem;
+    display: flex; align-items: center; gap: .75rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    white-space: nowrap;
+  }
+  .hero-badge-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .hero-badge-text { font-size: 0.8rem; font-weight: 600; color: var(--ink); }
+  .hero-badge-sub { font-size: 0.72rem; color: var(--ink-muted); }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 100px 5vw; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: .75rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .section-eyebrow::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--accent); opacity: .4; }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--ink-muted);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+  .section-head { margin-bottom: 4rem; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--surface); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .about-info-list { display: flex; flex-direction: column; gap: 0; }
+  .about-info-item {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: .9rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  .about-info-item:first-child { border-top: 1px solid var(--border); }
+  .about-info-key { color: var(--ink-muted); font-weight: 500; min-width: 90px; }
+  .about-info-val { color: var(--ink); font-weight: 600; }
+  .about-bio {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  /* Skills */
+  .skills-block { margin-top: 2.5rem; }
+  .skills-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-bottom: 1rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .skill-tag {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: .4rem .9rem;
+    border-radius: 6px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    color: var(--ink-soft);
+    transition: border-color .2s, color .2s;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+  .skill-tag.accent-tag {
+    background: var(--accent-light);
+    border-color: rgba(91,74,245,.2);
+    color: var(--accent);
+  }
+
+  /* Personal skills bars */
+  .skill-bar-group { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem; }
+  .skill-bar-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.85rem; font-weight: 500; color: var(--ink-soft);
+    margin-bottom: .4rem;
+  }
+  .skill-bar-track {
+    height: 5px; background: var(--border); border-radius: 100px; overflow: hidden;
+  }
+  .skill-bar-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transform-origin: left;
+    animation: barGrow 1s ease forwards;
+    transform: scaleX(0);
+  }
+  @keyframes barGrow { to { transform: scaleX(1); } }
+
+  /* ── RESUME ── */
+  .resume-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .resume-col-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: .75rem;
+  }
+  .resume-col-title::before {
+    content: '';
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item {
+    position: relative;
+    padding: 0 0 2.5rem 2rem;
+    border-left: 2px solid var(--border);
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -5px; top: 6px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--white);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: .35rem;
+  }
+  .timeline-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: .2rem;
+  }
+  .timeline-sub {
+    font-size: 0.82rem;
+    color: var(--accent-2);
+    font-weight: 600;
+    margin-bottom: .6rem;
+  }
+  .timeline-body { font-size: 0.87rem; color: var(--ink-muted); line-height: 1.65; }
+
+  /* ── SERVICES ── */
+  #service { background: var(--surface); }
+  .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.25rem;
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .3s;
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.08); border-color: rgba(91,74,245,.2); }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: .75rem;
+    letter-spacing: -0.02em;
+  }
+  .service-desc { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.7; }
+
+  /* ── PORTFOLIO ── */
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .portfolio-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .portfolio-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.09); }
+  .portfolio-thumb {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #e8e5fe 0%, #d0f5ee 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .portfolio-overlay {
+    position: absolute; inset: 0;
+    background: rgba(91,74,245,.85);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .25s;
+    font-size: 0.85rem; font-weight: 600; color: #fff;
+    letter-spacing: 0.03em;
+  }
+  .portfolio-card:hover .portfolio-overlay { opacity: 1; }
+  .portfolio-info { padding: 1.25rem 1.5rem; }
+  .portfolio-cat {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: .4rem;
+  }
+  .portfolio-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--ink); }
+  #testimonials .section-eyebrow { color: var(--accent-2); }
+  #testimonials .section-eyebrow::after { background: var(--accent-2); }
+  #testimonials .section-title { color: var(--white); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .testimonial-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .testimonial-quote { font-size: 2rem; color: var(--accent); line-height: 1; margin-bottom: 1rem; }
+  .testimonial-text { font-size: 0.9rem; color: rgba(255,255,255,.7); line-height: 1.75; margin-bottom: 1.5rem; }
+  .testimonial-author { display: flex; align-items: center; gap: .85rem; }
+  .author-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; color: #fff;
+    flex-shrink: 0;
+  }
+  .author-name { font-weight: 600; font-size: 0.9rem; color: #fff; }
+  .author-role { font-size: 0.78rem; color: rgba(255,255,255,.4); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--surface); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-info-items { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+  .contact-info-item {
+    display: flex; align-items: center; gap: 1.25rem;
+  }
+  .contact-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .contact-item-label { font-size: 0.78rem; color: var(--ink-muted); font-weight: 500; margin-bottom: .2rem; }
+  .contact-item-value { font-size: 0.95rem; color: var(--ink); font-weight: 600; }
+  .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: .45rem; }
+  .form-label { font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); }
+  .form-input, .form-textarea {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    outline: none;
+    transition: border-color .2s;
+    width: 100%;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: .9rem 2.5rem;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    align-self: flex-start;
+    box-shadow: 0 4px 20px rgba(91,74,245,.3);
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(91,74,245,.4); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 3rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,.4); }
+  .footer-socials { display: flex; gap: 1rem; }
+  .social-link {
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.12);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.5);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: border-color .2s, color .2s;
+  }
+  .social-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── WHATSAPP FLOAT ── */
+  .whatsapp-float {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 99;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.4rem;
+    box-shadow: 0 6px 20px rgba(37,211,102,.4);
+    text-decoration: none;
+    transition: transform .2s;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-card { display: none; }
+    .about-grid, .resume-cols, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid, .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    section { padding: 70px 1.25rem; }
+    .hero { padding: 100px 1.25rem 60px; }
+    .services-grid, .testimonials-grid, .portfolio-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">sajid<span>.</span>dev</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#service">Services</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">Available for freelance work</div>
+      <h1>Hi, I'm <span class="name-accent">Sajid</span><br>Full-Stack<br>Developer</h1>
+      <p class="hero-desc">I build dynamic, scalable web applications using PHP, MySQL, and modern front-end technologies — from small business sites to full CMS platforms.</p>
+      <div class="hero-actions">
+        <a href="#portfolio" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-outline">Let's Talk</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-val">2<span>+</span></div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="stat-val">20<span>+</span></div>
+          <div class="stat-label">Projects Done</div>
+        </div>
+        <div>
+          <div class="stat-val">100<span>%</span></div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-inner">
+        <div class="hero-img-placeholder">
+          <span>Sajid Amin</span>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-icon">⚡</div>
+        <div>
+          <div class="hero-badge-text">Open to Work</div>
+          <div class="hero-badge-sub">PHP · Full-Stack · KPK, Pakistan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-eyebrow">Who I Am</div>
+        <h2 class="section-title">Building the web,<br>one line at a time.</h2>
+        <p class="about-bio">I'm a dedicated web developer from KPK, Pakistan with a focus on PHP and full-stack development. I help businesses bring ideas to life through clean, scalable, and user-friendly web applications — from simple landing pages to complex content management systems.</p>
+        <p class="about-bio">With a Computer Science degree from the University of Swabi and 2+ years of hands-on freelance experience on Upwork and Handy Devs, I've built projects across varied domains while always prioritising quality, performance, and clean code.</p>
+        <div class="skills-block">
+          <div class="skills-label">Tech Stack</div>
+          <div class="skill-tags">
+            <span class="skill-tag accent-tag">PHP</span>
+            <span class="skill-tag accent-tag">CodeIgniter</span>
+            <span class="skill-tag accent-tag">MySQL</span>
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">Bootstrap 5</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">jQuery</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="about-info-list">
+          <div class="about-info-item">
+            <span class="about-info-key">Name</span>
+            <span class="about-info-val">Sajid Amin</span>
+          </div>
+          <div class="about-info-item">
+            <span class="about-info-key">Born</span>
+            <span class="about-info-val">May 1, 2000</span>
+          </div>
+          <div class="about-info-item">
+            <span class="about-info-key">Location</span>
+            <span class="about-info-val">KPK, Pakistan</span>
+          </div>
+          <div class="about-info-item">
+            <span class="about-info-key">Email</span>
+            <span class="about-info-val">imsajidamin@gmail.com</span>
+          </div>
+          <div class="about-info-item">
+            <span class="about-info-key">Phone</span>
+            <span class="about-info-val">+92 340 007 6832</span>
+          </div>
+          <div class="about-info-item">
+            <span class="about-info-key">Freelance</span>
+            <span class="about-info-val" style="color:var(--accent-2)">Available ✓</span>
+          </div>
+        </div>
+        <div class="skills-block" style="margin-top:2.5rem">
+          <div class="skills-label">Soft Skills</div>
+          <div class="skill-bar-group">
+            <div>
+              <div class="skill-bar-label"><span>Time Management</span><span>90%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+            </div>
+            <div>
+              <div class="skill-bar-label"><span>Efficiency</span><span>70%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%; animation-delay:.1s"></div></div>
+            </div>
+            <div>
+              <div class="skill-bar-label"><span>Integrity</span><span>80%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%; animation-delay:.2s"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-eyebrow">Background</div>
+      <h2 class="section-title">Skills &amp; Experience</h2>
+      <p class="section-sub">A blend of academic foundation and real-world freelance projects across 2+ years.</p>
+    </div>
+    <div class="resume-cols">
+      <div>
+        <div class="resume-col-title">Education</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2018 — 2022</div>
+            <div class="timeline-title">Bachelor of Science in Computer Science</div>
+            <div class="timeline-sub">University of Swabi</div>
+            <p class="timeline-body">Gained a strong foundation in programming, algorithms, data structures, and software development. Built problem-solving skills through practical coding and system design projects.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="resume-col-title">Experience</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2022 — Present</div>
+            <div class="timeline-title">Full-Stack Web Developer</div>
+            <div class="timeline-sub">Upwork &amp; Handy Devs (Freelance)</div>
+            <p class="timeline-body">Designing and developing dynamic websites and web applications for clients using HTML, CSS, JavaScript, PHP, CodeIgniter, and MySQL. Delivered projects ranging from business sites to CMS platforms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="service">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-eyebrow">What I Do</div>
+      <h2 class="section-title">Services I Offer</h2>
+      <p class="section-sub">Quality and performance are non-negotiable in every project I deliver.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <div class="service-title">Responsive Web Design</div>
+        <p class="service-desc">Websites that look and perform flawlessly on every device — desktop, tablet, or mobile — using a mobile-first approach, fluid layouts, and intuitive navigation.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <div class="service-title">SEO Optimisation</div>
+        <p class="service-desc">Boost your visibility in search engines through on-page optimisation, keyword strategy, clean code, and performance improvements that drive organic traffic.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <div class="service-title">Custom Web Development</div>
+        <p class="service-desc">Tailor-made websites and applications built with PHP, CodeIgniter, MySQL on the back-end and clean HTML, CSS, Bootstrap, and JavaScript on the front.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-eyebrow">Work</div>
+      <h2 class="section-title">Selected Projects</h2>
+      <p class="section-sub">A sample of client work spanning web development, CMS platforms, and custom solutions.</p>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:linear-gradient(135deg,#e0ddf8,#c9f0e9)">
+          <span>🌐</span>
+          <div class="portfolio-overlay">View Project →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-cat">PHP · MySQL</div>
+          <div class="portfolio-name">Custom CMS Platform</div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:linear-gradient(135deg,#fde8d8,#fdf6c8)">
+          <span>🛍️</span>
+          <div class="portfolio-overlay">View Project →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-cat">Bootstrap · PHP</div>
+          <div class="portfolio-name">E-Commerce Website</div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:linear-gradient(135deg,#d8effe,#d8f8e9)">
+          <span>📊</span>
+          <div class="portfolio-overlay">View Project →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-cat">CodeIgniter · MySQL</div>
+          <div class="portfolio-name">Business Dashboard</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-eyebrow">Testimonials</div>
+      <h2 class="section-title">What clients say</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Quick, efficient, and reliable. The web development process was seamless, and the final product is outstanding. Highly recommend Sajid for any web project.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JO</div>
+          <div>
+            <div class="author-name">Jecob Oramson</div>
+            <div class="author-role">Designer</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">The design is elegant and customer support is amazing. I would highly recommend working with Sajid — professional from start to finish.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">KH</div>
+          <div>
+            <div class="author-name">Kerry Hudson</div>
+            <div class="author-role">IBO Corp</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">The code is clean and easy to understand. Comment blocks made it easy to read, and support was resolved in minutes. Simply an amazing experience.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AW</div>
+          <div>
+            <div class="author-name">Albert Walker</div>
+            <div class="author-role">CEO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <div class="section-eyebrow">Get in Touch</div>
+        <h2 class="section-title">Let's build something together.</h2>
+        <p class="section-sub" style="margin-top:.75rem">Have a project in mind or need a hand with your site? Drop me a message and I'll get back to you within 24 hours.</p>
+        <div class="contact-info-items">
+          <div class="contact-info-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-item-label">Call / WhatsApp</div>
+              <div class="contact-item-value">+92 340 007 6832</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-value">imsajidamin@gmail.com</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-item-label">Location</div>
+              <div class="contact-item-value">KPK, Pakistan</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <form class="contact-form" onsubmit="return false">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-input" placeholder="John" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-input" placeholder="Doe" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="john@example.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-input" placeholder="Project inquiry" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Tell me about your project..."></textarea>
+          </div>
+          <button class="form-submit">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">sajid<span>.</span>dev</a>
+  <p class="footer-copy">© 2025 Sajid Amin. All rights reserved.</p>
+  <div class="footer-socials">
+    <a href="#" class="social-link" aria-label="Facebook">f</a>
+    <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+    <a href="#" class="social-link" aria-label="Instagram">in</a>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/+923400076832" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>
